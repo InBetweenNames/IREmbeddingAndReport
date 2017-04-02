@@ -12,9 +12,11 @@ parser.add_argument("--train", metavar="file", type=str, nargs="+",
 
 parser.add_argument("--model", metavar="model", type=str, help="Pre-trained doc2vec model (use --train to create)")
 
-parser.add_argument("-e", "--evaluate", action="store_true", help="Evaluate model (requires --train or --model)")
+parser.add_argument("--evaluate", action="store_true", help="Evaluate model (requires --train or --model)")
 
 parser.add_argument("--findsimilar", help="Find all documents similar to the listed one")
+
+parser.add_argument("--dumpdocvectors", help="Dump document vectors to file (requires --train or --model)")
 
 args = parser.parse_args()
 
@@ -60,5 +62,16 @@ if args.evaluate and model_dm != "":
 
 if args.findsimilar and model_dm != "":
     print("Documents similar to: " + args.findsimilar)
-    simdocs = model_dm.docvecs.most_similar(["7EAE63BC"])
+    simdocs = model_dm.docvecs.most_similar([args.findsimilar])
     print(simdocs)
+    print("Document vector:")
+    print(model_dm.docvecs[args.findsimilar])
+
+if args.dumpdocvectors is not None and model_dm != "":
+    print("Writing document vectors to file: " + args.dumpdocvectors)
+    f = open(args.dumpdocvectors, "w")
+    for i in model_dm.docvecs.offset2doctag:
+        f.write(i + "\t")
+        for j in model_dm.docvecs[i]:
+            f.write("{:.17f}\t".format(j))
+        f.write("\n")
