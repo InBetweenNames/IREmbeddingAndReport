@@ -1,3 +1,6 @@
+#Written by Shane Peelar
+#60-538 Information Retrieval
+
 import os
 import numpy as np
 from gensim.models.doc2vec import TaggedDocument
@@ -12,7 +15,7 @@ parser.add_argument("--train", metavar="file", type=str, nargs="+",
 
 parser.add_argument("--model", metavar="model", type=str, help="Pre-trained doc2vec model (use --train to create)")
 
-parser.add_argument("--evaluate", action="store_true", help="Evaluate model (requires --train or --model)")
+#parser.add_argument("--evaluate", action="store_true", help="Evaluate model (requires --train or --model)")
 
 parser.add_argument("--findsimilar", help="Find all documents similar to the listed one")
 
@@ -57,8 +60,8 @@ elif args.train is not None:
 
     print("Done")
 
-if args.evaluate and model_dm != "":
-    print("Evaluating model")
+#if args.evaluate and model_dm != "":
+#    print("Evaluating model")
 
 if args.findsimilar and model_dm != "":
     print("Documents similar to: " + args.findsimilar)
