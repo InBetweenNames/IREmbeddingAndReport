@@ -1,7 +1,10 @@
 Author: Shane Peelar <peelar@uwindsor.ca>
 
+~~~
 python3 vectorize.py --train icse_id.txt vldb_id.txt sigmod_id.txt  --dumpdocvectors docvecs.txt
+~~~
 
+~~~
 usage: vectorize.py [-h] [--train file [file ...]] [--model model]
                     [--findsimilar FINDSIMILAR]
                     [--dumpdocvectors DUMPDOCVECTORS]
@@ -18,4 +21,4 @@ optional arguments:
   --dumpdocvectors DUMPDOCVECTORS
                         Dump document vectors to file (requires --train or
                         --model)
-
+~~~
