@@ -1,5 +1,12 @@
 Author: Shane Peelar <peelar@uwindsor.ca>
 
+If you use this program in your project, please cite me.  You can use
+this BiBTeX entry:
+
+~~~
+@article{peelar, title={Vectorize.py}, url={https://github.com/InBetweenNames/IREmbeddingAndReport}, author={Peelar, Shane M}} 
+~~~
+
 ~~~
 python3 vectorize.py --train icse_id.txt vldb_id.txt sigmod_id.txt  --dumpdocvectors docvecs.txt
 ~~~
