@@ -73,6 +73,7 @@ if args.findsimilar and model_dm != "":
 if args.dumpdocvectors is not None and model_dm != "":
     print("Writing document vectors to file: " + args.dumpdocvectors)
     f = open(args.dumpdocvectors, "w")
+	f.write("{} {}\n".format(len(model_dm.docvecs.offset2doctag),len(model_dm.docvecs.offset2doctag[0])))
     for i in model_dm.docvecs.offset2doctag:
         f.write(i + "\t")
         for j in model_dm.docvecs[i]:
