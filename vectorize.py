@@ -17,9 +17,11 @@ parser.add_argument("--model", metavar="model", type=str, help="Pre-trained doc2
 
 #parser.add_argument("--evaluate", action="store_true", help="Evaluate model (requires --train or --model)")
 
-parser.add_argument("--findsimilar", help="Find all documents similar to the listed one")
+parser.add_argument("--findsimilar", help="Find all documents similar to the listed one (must include conference name, for example --findsimilar '<id> <conference>', a space character must exist between <id> and <conference>)")
 
 parser.add_argument("--dumpdocvectors", help="Dump document vectors to file (requires --train or --model)")
+
+parser.add_argument("--dumpwordvectors", help="Dump word vectors to file (requires --train or --model)")
 
 args = parser.parse_args()
 
@@ -34,9 +36,10 @@ elif args.train is not None:
     tags = []
     for f in files:
         print("Reading " + f)
+        conference = f.replace("_id.txt", "")
         for line in open(f):
             components = line.split("\t")
-            tags.append(TaggedDocument(components[2].split(), [components[0]]))
+            tags.append(TaggedDocument(components[2].split(), [components[0] + " " + conference]))
 
     #Randomize document order first
     print("Randomizing document order")
@@ -52,13 +55,15 @@ elif args.train is not None:
         model_dm.alpha -= 0.002
         model_dm.min_alpha = model_dm.alpha
 
-    print("Writing word2vec format: wordvectors.txt")
-    model_dm.wv.save_word2vec_format("wordvectors.txt")
-
     print("Writing doc2vec format: docvectors.model")
     model_dm.save("docvectors.model")
 
     print("Done")
+
+
+if args.dumpwordvectors is not None:
+    print("Writing word vectors (word2vec format) to file: " + args.dumpwordvectors)
+    model_dm.wv.save_word2vec_format(args.dumpwordvectors)
 
 #if args.evaluate and model_dm != "":
 #    print("Evaluating model")
@@ -75,7 +80,7 @@ if args.dumpdocvectors is not None and model_dm != "":
     f = open(args.dumpdocvectors, "w")
     f.write("{} {}\n".format(len(model_dm.docvecs.offset2doctag),len(model_dm.docvecs.offset2doctag[0])))
     for i in model_dm.docvecs.offset2doctag:
-        f.write(i + "\t")
+        f.write(i + " ")
         for j in model_dm.docvecs[i]:
-            f.write("{:.17f}\t".format(j))
+            f.write("{:.17f} ".format(j))
         f.write("\n")
