@@ -14,10 +14,14 @@ python3 vectorize.py --train icse_id.txt vldb_id.txt sigmod_id.txt  --dumpdocvec
 Both the document vectors and word vectors are space delimited.
 
 The document vector file has the form, for each paper's corresponding paperid:
+~~~
 <paperid> <conference> <vector>
+~~~
 
 The word vector file has the form, for each unique word in the metadata files:
+~~~
 <word> <vector>
+~~~
 
 To reuse existing training data:
 
